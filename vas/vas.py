@@ -6,7 +6,8 @@ from vas import responder, text_input, handler
 
 class Vas:
     MODULES = [
-        'vas.commands.basic'
+        'vas.commands.basic',
+        'vas.commands.system'
     ]
     def __init__(self):
         self.responder = responder.Responder(self)
