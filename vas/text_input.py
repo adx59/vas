@@ -1,10 +1,16 @@
 #!/usr/bin/env python
-import pyHook
-import pythoncom
+import sys
 import time
 from threading import Thread
 
 import pyperclip
+
+if sys.platform == 'win32':
+    import pyHook
+    import pythoncom
+elif sys.platform == 'linux' or sys.platform == 'linux2':
+    import linux.pyxhook as pyxhook
+
 
 class Input:
     def __init__(self, parent):
@@ -22,10 +28,13 @@ class Input:
 
             return True
         
-        hook_manager = pyHook.HookManager()
-        hook_manager.KeyDown = on_keypress
-        hook_manager.HookKeyboard()
-        pythoncom.PumpMessages()
+        if sys.platform == 'win32':
+            hook_manager = pyHook.HookManager()
+            hook_manager.KeyDown = on_keypress
+            hook_manager.HookKeyboard()
+            pythoncom.PumpMessages()
+        elif sys.platform == 'linux' or sys.platform == 'linux2':
+            raise NotImplementedError  
     
     def launch(self):
         poll_keyboard_thread = Thread(target=self.poll_keyboard)

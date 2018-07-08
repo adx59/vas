@@ -78,7 +78,7 @@ class Handler:
         for d in to_delete:
             del self.commands[d]
 
-        print(f'[LOAD] Unloaded module, commands list now is: {self.commands}')
+        print(f'[LOAD] Unloaded module {module_name}')
         
     def reload_module(self, module_name: str):
         """Reloads a module."""
