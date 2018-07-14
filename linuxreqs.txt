@@ -1,0 +1,4 @@
+pyperclip
+Xlib
+pydub
+gTTS

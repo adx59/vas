@@ -19,8 +19,8 @@ class Input:
     def poll_keyboard(self):
         def on_keypress(event):
             nonlocal self
-            key = event.KeyID
-            if key == 118:
+            key = event.Key
+            if key == "F7":
                 query = pyperclip.paste()
                 print(f'[INFO] Processing query "{query}"...')
                 
@@ -34,7 +34,10 @@ class Input:
             hook_manager.HookKeyboard()
             pythoncom.PumpMessages()
         elif sys.platform == 'linux' or sys.platform == 'linux2':
-            raise NotImplementedError  
+            hook_manager = pyxhook.HookManager()
+            hook_manager.KeyDown = on_keypress
+            hook_manager.HookKeyboard()
+            hook_manager.start()
     
     def launch(self):
         poll_keyboard_thread = Thread(target=self.poll_keyboard)

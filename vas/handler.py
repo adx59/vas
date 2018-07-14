@@ -24,6 +24,11 @@ class Handler:
         self.categories = {}
         self.commands = {}
 
+    def error_handler(self, error):
+        """A very sophisticated error handler."""
+        print("Error occured lol.")
+        print(error)
+
     def handle_command(self, prompts):
         """Handles a command with prompts"""
         for cmd_prompts in self.commands:
@@ -38,9 +43,15 @@ class Handler:
 
                 if self.commands[cmd_prompts].module in self.modules:
                     category = self.categories[self.commands[cmd_prompts].category]
-                    self.commands[cmd_prompts].invoke(category, self.responder, filtered_args)
+                    try:
+                        self.commands[cmd_prompts].invoke(category, self.responder, filtered_args)
+                    except Exception as e:
+                        self.error_handler(e)
                 else:
-                    self.commands[cmd_prompts].invoke(self.responder, filtered_args)
+                    try:
+                        self.commands[cmd_prompts].invoke(self.responder, filtered_args)
+                    except Exception as e:
+                        self.error_handler(e)
                 return
 
     def add_command(self, command: Command):
