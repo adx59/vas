@@ -12,7 +12,12 @@ class System:
     def cmd(self, responder, args):
         command = ' '.join(args) 
 
-        cmd_process = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        cmd_process = subprocess.run(
+            command,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            shell=True
+        )
         out = str(cmd_process.stdout)[2:-1].replace("\\n", "\n") 
         err = str(cmd_process.stderr)[2:-1].replace("\\n", "\n")
 
