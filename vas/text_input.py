@@ -6,7 +6,7 @@ from threading import Thread
 import pyperclip
 
 if sys.platform == 'win32':
-    import pyHook
+    import pyWinhook as pyHook
     import pythoncom
 elif sys.platform == 'linux' or sys.platform == 'linux2':
     import linux.pyxhook as pyxhook
